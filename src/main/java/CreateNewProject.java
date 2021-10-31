@@ -8,8 +8,8 @@ import org.openqa.selenium.support.ui.Select;
 import javax.swing.*;
 import java.util.concurrent.TimeUnit;
 
-public class CreateNewProjectTest {
-    private static WebDriver driver;
+public class CreateNewProject {
+    static WebDriver driver;
     private static final String CRM_URL = "https://crm.geekbrains.space";
     public static void main(String[] args) {
        try {
@@ -26,25 +26,25 @@ public class CreateNewProjectTest {
        }
     }
 
-    private static void setProperties() {
+    static void setProperties() {
         System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver.exe");
         driver = new ChromeDriver();
     }
-    private static void login() {
+    static void login() {
       driver.get(CRM_URL);
       driver.findElement(By.id("prependedInput")).sendKeys("Applanatest1");
       driver.findElement(By.id("prependedInput2")).sendKeys("Student2020!");
       driver.findElement(By.id("_submit")).click();
     }
-    private static void openMyProjects() throws InterruptedException {
+     static void openMyProjects() throws InterruptedException {
         WebElement weProjects = driver.findElement(By.xpath("//div[@id='main-menu']/ul/li/a/span[.='Проекты']"));
         Actions actions = new Actions(driver);
         actions.moveToElement(weProjects).build().perform();
         driver.findElement(By.xpath("//span[.='Мои проекты']")).click();
 
     }
-    private static void createNewProject() throws InterruptedException {
-        driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+    static void createNewProject() throws InterruptedException {
+       // driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
         driver.findElement(By.xpath("//a[.='Создать проект']")).click();
     }
     private static void fillNewProject() throws InterruptedException {

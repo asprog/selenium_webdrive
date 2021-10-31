@@ -6,12 +6,13 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 
+import java.util.Collections;
 import java.util.concurrent.TimeUnit;
 
-public class CreateNewContactTest {
-    private static WebDriver driver;
-    private static final String CRM_URL = "https://crm.geekbrains.space";
-    public static void main(String[] args) {
+public class CreateNewContact {
+    static WebDriver driver;
+    static final String CRM_URL = "https://crm.geekbrains.space";
+    static void main(String[] args) {
        try {
            setProperties();
            login();
@@ -26,28 +27,31 @@ public class CreateNewContactTest {
        }
     }
 
-    private static void setProperties() {
+    static void setProperties() {
         System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver.exe");
-        driver = new ChromeDriver(new ChromeOptions().addArguments("--disable-notifications"));
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("start-maximized");
+        options.setExperimentalOption("excludeSwitches", Collections.singletonList("enable-automation"));
+        options.setExperimentalOption("useAutomationExtension", false);
+        driver = new ChromeDriver(options);
     }
-    private static void login() {
+    static void login() {
       driver.get(CRM_URL);
       driver.findElement(By.id("prependedInput")).sendKeys("Applanatest1");
       driver.findElement(By.id("prependedInput2")).sendKeys("Student2020!");
       driver.findElement(By.id("_submit")).click();
     }
-    private static void openContacts() throws InterruptedException {
+    static void openContacts() throws InterruptedException {
         WebElement weProjects = driver.findElement(By.xpath("//div[@id='main-menu']/ul/li/a/span[.='Контрагенты']"));
         Actions actions = new Actions(driver);
         actions.moveToElement(weProjects).build().perform();
         driver.findElement(By.xpath("//a/span[.='Контактные лица']")).click();
-
     }
-    private static void createNewContact() throws InterruptedException {
+    static void createNewContact() throws InterruptedException {
         driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
         driver.findElement(By.xpath("//a[.='Создать контактное лицо']")).click();
     }
-    private static void fillNewContact() throws InterruptedException {
+    static void fillNewContact() throws InterruptedException {
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         driver.findElement(By.xpath("//input[@name='crm_contact[lastName]']")).sendKeys("Пупкин");
         driver.findElement(By.xpath("//input[@name='crm_contact[firstName]']")).sendKeys("Вася");
@@ -56,6 +60,5 @@ public class CreateNewContactTest {
         driver.findElement(By.xpath("//div[.='1234']")).click();
         driver.findElement(By.xpath("//input[@name='crm_contact[jobTitle]']")).sendKeys("Студент");
         driver.findElement(By.xpath("//button[contains(.,'Сохранить и закрыть')]")).click();
-
     }
 }
