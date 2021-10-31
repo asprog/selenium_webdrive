@@ -77,7 +77,7 @@ public class CreateNewProjectTest {
         driver.findElement(By.xpath("//div[@class='value-field-frame']/input")).sendKeys(crmProjectName);
         driver.findElement(By.xpath("//button[.='Обновить']")).click();
         driver.manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
-        Thread.sleep(5000);
+        //Thread.sleep(5000);
         List<WebElement> elements = driver.findElements(By.xpath("//table[@class='grid table-hover table table-bordered table-condensed']//td[@class='string-cell grid-cell grid-body-cell grid-body-cell-name']"));
         boolean find = false;
         if(elements != null && elements.size() != 0)  find = !find;
